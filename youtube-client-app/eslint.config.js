@@ -3,6 +3,8 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const airbnbConfig = require('eslint-config-airbnb-base');
+// const airbnbTypescriptBase = require('eslint-config-airbnb-typescript/base');
 
 module.exports = tseslint.config(
   {
@@ -12,6 +14,7 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
+      airbnbConfig,
       eslintPluginPrettierRecommended,
     ],
     processor: angular.processInlineTemplates,
