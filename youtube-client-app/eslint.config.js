@@ -6,6 +6,8 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 const airbnbConfig = require('eslint-config-airbnb-base');
 // const airbnbTypescriptBase = require('eslint-config-airbnb-typescript/base');
 
+console.log(airbnbConfig);
+
 module.exports = tseslint.config(
   {
     files: ['**/*.ts'],
@@ -14,11 +16,12 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
-      airbnbConfig,
       eslintPluginPrettierRecommended,
     ],
+    plugins: { airbnbConfig },
     processor: angular.processInlineTemplates,
     rules: {
+      ...airbnbConfig.rules,
       '@angular-eslint/directive-selector': [
         'error',
         {
