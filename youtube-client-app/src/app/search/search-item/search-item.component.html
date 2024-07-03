@@ -1,1 +1,13 @@
-<p>search-item works!</p>
+<mat-card class="item-card"
+          appearance="outlined">
+  <img mat-card-image
+       [src]="item.snippet.thumbnails.medium.url"
+       alt="{{ item.snippet.title }}">
+  <mat-card-content class="card-content">
+    <mat-card-title>{{item.snippet.title}}</mat-card-title>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>

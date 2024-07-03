@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 import { CustomButtonComponent } from '../../components/custom-button/custom-button.component';
+import { SearchInputComponent } from '../../components/search-input/search-input.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CustomButtonComponent, MatInputModule, MatIconModule, MatFormFieldModule, FormsModule],
+  imports: [CustomButtonComponent, SearchInputComponent, MatRadioModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
-  value = '';
-}
+export class HeaderComponent {}

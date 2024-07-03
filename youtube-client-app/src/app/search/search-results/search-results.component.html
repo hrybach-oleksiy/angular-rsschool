@@ -1,1 +1,9 @@
-<p>search-results works!</p>
+<ul class="items-list">
+  @if(items.length) {
+  @for (item of items; track item.snippet.title) {
+  <li class="item">
+    <app-search-item [item]="item"></app-search-item>
+  </li>
+  }
+  }
+</ul>

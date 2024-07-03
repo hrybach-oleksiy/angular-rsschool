@@ -2,7 +2,7 @@ export interface SearchResultsData {
   kind: string;
   etag: string;
   pageInfo: PageInfoData;
-  items: SearchItemData;
+  items: SearchItemData[];
 }
 
 export interface PageInfoData {
@@ -54,7 +54,6 @@ export interface Statistics {
 export interface SearchItemData {
   kind: string;
   etag: string;
-  id: string;
   snippet: Snippet;
   statistics: Statistics;
 }
