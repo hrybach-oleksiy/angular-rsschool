@@ -1,24 +1,26 @@
 <header class="header">
-	<div class="controls-block">
-		<div class="search-block">
-			<mat-form-field class="form-field">
-				<mat-label>Search Video</mat-label>
-				<input matInput
-					   type="text"
-					   [(ngModel)]="value">
-				@if (value) {
-				<button matSuffix
-						mat-icon-button
-						aria-label="Clear"
-						(click)="value=''">
-					<mat-icon>close</mat-icon>
-				</button>
-				}
-			</mat-form-field>
-			<app-custom-button color="red">
-				Search
-			</app-custom-button>
-		</div>
-		<div class="sort-block"></div>
-	</div>
+  <div class="controls-block">
+    <div class="search-block">
+      <mat-form-field appearance="outline"
+                      subscriptSizing="dynamic"
+                      class="form-field">
+        <mat-label>Search Video</mat-label>
+        <input matInput
+               type="text"
+               [(ngModel)]="value">
+        @if (value) {
+        <button matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        }
+      </mat-form-field>
+      <app-custom-button color="red">
+        Search
+      </app-custom-button>
+    </div>
+    <div class="sort-block"></div>
+  </div>
 </header>

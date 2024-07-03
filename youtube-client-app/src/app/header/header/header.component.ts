@@ -13,5 +13,5 @@ import { CustomButtonComponent } from '../../components/custom-button/custom-but
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  value = 'Clear';
+  value = '';
 }
