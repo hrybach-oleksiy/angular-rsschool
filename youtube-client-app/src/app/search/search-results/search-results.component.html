@@ -1,9 +1,15 @@
 <ul class="items-list">
-  @if(items.length) {
-  @for (item of items; track item.snippet.title) {
+  @if(showResults && filteredItems.length > 0) {
+  @for (item of filteredItems; track item.snippet.title) {
   <li class="item">
     <app-search-item [item]="item"></app-search-item>
   </li>
   }
+  }
+
+  @if (showResults && filteredItems.length === 0) {
+  <div class="not-found">
+    No results found
+  </div>
   }
 </ul>

@@ -4,13 +4,16 @@
   <mat-label>Search Video</mat-label>
   <input matInput
          type="text"
-         [(ngModel)]="searchValue">
-  @if (searchValue) {
+         [(ngModel)]="searchQuery">
+  @if (searchQuery) {
   <button matSuffix
           mat-icon-button
           aria-label="Clear"
-          (click)="searchValue=''">
+          (click)="searchQuery=''">
     <mat-icon>close</mat-icon>
   </button>
   }
 </mat-form-field>
+<app-custom-button (click)="onSearch()">
+  Search
+</app-custom-button>
