@@ -1,5 +1,6 @@
 <mat-card class="item-card"
-          appearance="outlined">
+          appearance="outlined"
+          [appBorderColor]="item.snippet.publishedAt">
   <img mat-card-image
        [src]="item.snippet.thumbnails.medium.url"
        alt="{{ item.snippet.title }}">
