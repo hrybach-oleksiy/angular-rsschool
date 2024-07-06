@@ -1,8 +1,18 @@
 .item-card {
-  height: 400px;
+  min-height: 400px;
   gap: 1rem;
 }
 
 .card-content {
   flex-grow: 1;
+}
+
+.counts {
+  font-size: 12px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
 }

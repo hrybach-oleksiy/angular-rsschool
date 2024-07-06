@@ -3,11 +3,29 @@
   <img mat-card-image
        [src]="item.snippet.thumbnails.medium.url"
        alt="{{ item.snippet.title }}">
+  <mat-card-actions>
+    <button mat-icon-button
+            aria-label="Views">
+      <mat-icon>visibility</mat-icon>
+      <span class="counts">{{ item.statistics.viewCount }}</span>
+    </button>
+    <button mat-icon-button
+            aria-label="Likes">
+      <mat-icon>thumb_up</mat-icon>
+      <span class="counts">{{ item.statistics.likeCount }}</span>
+    </button>
+    <button mat-icon-button
+            aria-label="Dislikes">
+      <mat-icon>thumb_down</mat-icon>
+      <span class="counts">{{ item.statistics.dislikeCount }}</span>
+    </button>
+    <button mat-icon-button
+            aria-label="Comments">
+      <mat-icon>comment</mat-icon>
+      <span class="counts">{{ item.statistics.commentCount }}</span>
+    </button>
+  </mat-card-actions>
   <mat-card-content class="card-content">
     <mat-card-title>{{item.snippet.title}}</mat-card-title>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
 </mat-card>

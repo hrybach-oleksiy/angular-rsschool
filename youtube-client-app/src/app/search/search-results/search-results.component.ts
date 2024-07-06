@@ -33,7 +33,6 @@ export class SearchResultsComponent implements OnInit {
           item.snippet.title.toLowerCase().includes(query.toLowerCase()),
         );
         this.showResults = true;
-        console.log(this.filteredItems);
       } else {
         this.filteredItems = [];
         this.showResults = false;
