@@ -1,6 +1,8 @@
 .item-card {
   min-height: 400px;
+  height: 585px;
   gap: 1rem;
+  padding-bottom: 2rem;
 }
 
 .card-content {
@@ -15,4 +17,8 @@ mat-card-actions {
   display: flex;
   justify-content: space-around;
   margin-bottom: 2rem;
+}
+
+.card-button {
+  align-self: center;
 }
