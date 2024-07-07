@@ -1,19 +1,21 @@
-<mat-form-field appearance="outline"
-                subscriptSizing="dynamic"
-                class="form-field">
-  <mat-label>Search Video</mat-label>
-  <input matInput
-         type="text"
-         [(ngModel)]="searchQuery">
-  @if (searchQuery) {
-  <button matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="searchQuery=''">
-    <mat-icon>close</mat-icon>
-  </button>
-  }
-</mat-form-field>
-<app-custom-button (click)="onSearch()">
-  Search
-</app-custom-button>
+<div class="search-input-wrapper">
+  <mat-form-field appearance="outline"
+                  subscriptSizing="dynamic"
+                  class="form-field">
+    <mat-label>Search Video</mat-label>
+    <input matInput
+           type="text"
+           [(ngModel)]="searchQuery">
+    @if (searchQuery) {
+    <button matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="searchQuery=''">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+  <app-custom-button (click)="onSearch()">
+    Search
+  </app-custom-button>
+</div>

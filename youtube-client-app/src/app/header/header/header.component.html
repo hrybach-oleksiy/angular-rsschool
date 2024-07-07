@@ -7,15 +7,6 @@
         <mat-icon>{{ showSortBlock ? 'close' : 'settings' }}</mat-icon>
       </button>
     </div>
-    <!-- <div class="sort-block"
-         [class.show]="showSortBlock">
-      <span>Sorting by: </span>
-      <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="1">date</mat-radio-button>
-        <mat-radio-button value="2">count of views</mat-radio-button>
-        <mat-radio-button value="2">word or sentence</mat-radio-button>
-      </mat-radio-group>
-    </div> -->
     <div class="sort-block"
          [class.show]="showSortBlock">
       <mat-form-field appearance="fill">
@@ -26,7 +17,6 @@
           <mat-option value="views">View Count</mat-option>
         </mat-select>
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label>Order</mat-label>
         <mat-select [(ngModel)]="sortDirection"
@@ -35,31 +25,14 @@
           <mat-option value="desc">Descending</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field appearance="fill"
+                      class="filter-input">
+        <mat-label>Filter by word or sentence</mat-label>
+        <input matInput
+               type="text"
+               [(ngModel)]="filterTerm"
+               (input)="onFilterChange()">
+      </mat-form-field>
     </div>
   </div>
 </header>
-<!-- <header>
-  <mat-toolbar color="primary">
-    <img src="assets/logo.png"
-         alt="Logo"
-         style="width: 50px;">
-    <input matInput
-           placeholder="Search"
-           [(ngModel)]="searchTerm">
-    <button mat-button
-            (click)="search()">Search</button>
-    <button mat-icon-button
-            [matMenuTriggerFor]="menu">
-      <mat-icon>settings</mat-icon>
-    </button>
-  </mat-toolbar>
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item
-            (click)="setSort('date')">By date</button>
-    <button mat-menu-item
-            (click)="setSort('views')">By views</button>
-    <button mat-menu-item
-            (click)="setSort('word')">By word</button>
-  </mat-menu>
-</header> -->

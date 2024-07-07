@@ -19,8 +19,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   public showResults: boolean = false;
   private searchTerm: string = '';
   private sortConfig = { criteria: 'date', direction: 'asc' };
+  public filterTerm: string = '';
+
   private searchSubscription!: Subscription;
   private sortSubscription!: Subscription;
+  private filterSubscription!: Subscription;
 
   constructor(
     private http: HttpClient,
@@ -48,6 +51,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       this.sortConfig = config;
       this.applyFilters();
     });
+
+    this.filterSubscription = this.searchService.filterTerm$.subscribe((term) => {
+      this.filterTerm = term;
+      this.applyFilters();
+    });
   }
 
   ngOnDestroy(): void {
@@ -56,6 +64,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     }
     if (this.sortSubscription) {
       this.sortSubscription.unsubscribe();
+    }
+
+    if (this.filterSubscription) {
+      this.filterSubscription?.unsubscribe();
     }
   }
 

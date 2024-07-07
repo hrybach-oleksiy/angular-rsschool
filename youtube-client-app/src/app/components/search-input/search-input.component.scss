@@ -1,4 +1,12 @@
-mat-form-field {
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.form-field {
   width: 300px;
 }
 
