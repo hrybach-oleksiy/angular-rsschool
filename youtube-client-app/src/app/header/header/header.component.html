@@ -1,4 +1,7 @@
 <header class="header">
+  <div class="logo">
+    <mat-icon class="logo-icon">camera_indoor</mat-icon>
+  </div>
   <div class="controls-block">
     <div class="search-block">
       <app-search-input></app-search-input>
@@ -34,5 +37,11 @@
                (input)="onFilterChange()">
       </mat-form-field>
     </div>
+  </div>
+  <div class="login">
+    <button mat-button>
+      <mat-icon>person</mat-icon>
+      Login
+    </button>
   </div>
 </header>
