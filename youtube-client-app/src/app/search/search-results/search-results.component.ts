@@ -83,10 +83,21 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // private applyFilters() {
+  //   this.filteredItems = this.items.filter((item) =>
+  //     item.snippet.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
+  //   );
+  //   this.sortItems();
+  // }
+
   private applyFilters() {
-    this.filteredItems = this.items.filter((item) =>
-      item.snippet.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
-    );
+    this.filteredItems = this.items
+      .filter((item) => item.snippet.title.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      .filter(
+        (item) =>
+          item.snippet.description.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
+          item.snippet.title.toLowerCase().includes(this.filterTerm.toLowerCase()),
+      );
     this.sortItems();
   }
 }
