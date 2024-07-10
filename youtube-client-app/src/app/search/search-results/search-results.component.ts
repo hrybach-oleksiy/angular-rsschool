@@ -5,19 +5,20 @@ import { Subscription } from 'rxjs';
 import { SearchItemComponent } from '../search-item/search-item.component';
 import { SearchItemData, SearchResultsData } from '../../types/interfaces';
 import { SearchService } from '../../services/search.service';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-search-results',
   standalone: true,
-  imports: [SearchItemComponent],
+  imports: [SearchItemComponent, FilterPipe],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
-  private items: SearchItemData[] = [];
+  public items: SearchItemData[] = [];
   public filteredItems: SearchItemData[] = [];
   public showResults: boolean = false;
-  private searchTerm: string = '';
+  public searchTerm: string = '';
   private sortConfig = { criteria: 'date', direction: 'asc' };
   public filterTerm: string = '';
 
@@ -82,13 +83,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       return direction === 'asc' ? valueA - valueB : valueB - valueA;
     });
   }
-
-  // private applyFilters() {
-  //   this.filteredItems = this.items.filter((item) =>
-  //     item.snippet.title.toLowerCase().includes(this.searchTerm.toLowerCase()),
-  //   );
-  //   this.sortItems();
-  // }
 
   private applyFilters() {
     this.filteredItems = this.items
