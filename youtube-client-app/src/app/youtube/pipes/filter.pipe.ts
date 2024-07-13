@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { SearchItemData } from '../types/interfaces';
+import { SearchItemData } from '../../types/interfaces';
 
 @Pipe({
   name: 'filter',

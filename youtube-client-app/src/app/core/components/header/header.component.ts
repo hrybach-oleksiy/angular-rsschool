@@ -5,8 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { SearchInputComponent } from '../../components/search-input/search-input.component';
-import { SearchService } from '../../services/search.service';
+import { SearchInputComponent } from '../../../shared/components/search-input/search-input.component';
+import { SearchService } from '../../../youtube/services/search.service';
 
 @Component({
   selector: 'app-header',

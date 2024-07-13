@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
-import { SearchService } from '../../services/search.service';
+import { SearchService } from '../../../youtube/services/search.service';
 
 @Component({
   selector: 'app-search-input',

@@ -1,4 +1,4 @@
-import { SearchItemData, Snippet, Statistics } from '../types/interfaces';
+import { SearchItemData, Snippet, Statistics } from '../../types/interfaces';
 
 export class SearchItemModel implements SearchItemData {
   private _id: string;

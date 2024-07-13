@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
 import { SearchItemComponent } from '../search-item/search-item.component';
-import { SearchItemData, SearchResultsData } from '../../types/interfaces';
-import { SearchService } from '../../services/search.service';
-import { FilterPipe } from '../../pipes/filter.pipe';
+import { SearchItemData, SearchResultsData } from '../../../../types/interfaces';
+import { SearchService } from '../../../services/search.service';
+import { FilterPipe } from '../../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-search-results',
