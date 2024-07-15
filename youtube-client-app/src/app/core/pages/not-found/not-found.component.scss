@@ -1,0 +1,11 @@
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+
+  mat-card {
+    padding: 2rem;
+  }
+}
