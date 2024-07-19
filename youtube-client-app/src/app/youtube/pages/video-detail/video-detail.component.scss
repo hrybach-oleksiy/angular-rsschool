@@ -1,0 +1,29 @@
+.video-card {
+  flex-direction: row;
+  align-items: center;
+
+  @media (max-width: 1199px) {
+    flex-direction: column;
+  }
+}
+
+.video-image-wrapper {
+  width: 60%;
+
+  @media (max-width: 1199px) {
+    width: 100%;
+  }
+}
+
+.video-image {
+  // height: 100%;
+  width: 100%;
+}
+
+.video-content {
+  width: 40%;
+
+  @media (max-width: 1199px) {
+    width: 100%;
+  }
+}

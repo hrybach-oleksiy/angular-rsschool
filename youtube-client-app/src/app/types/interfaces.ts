@@ -54,6 +54,7 @@ export interface Statistics {
 export interface SearchItemData {
   kind: string;
   etag: string;
+  id: string;
   snippet: Snippet;
   statistics: Statistics;
 }

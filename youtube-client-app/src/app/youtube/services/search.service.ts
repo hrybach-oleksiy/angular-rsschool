@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SearchItemData } from '../../types/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
+  private items: SearchItemData[] = [];
   private searchQuery = new BehaviorSubject<string>('');
-  searchQuery$ = this.searchQuery.asObservable();
+  private itemsSubject = new BehaviorSubject<SearchItemData[]>([]);
+  public searchQuery$ = this.searchQuery.asObservable();
+  public items$ = this.itemsSubject.asObservable();
 
   private sortConfig = new BehaviorSubject<{ criteria: string; direction: string }>({
     criteria: 'date',
@@ -27,5 +32,13 @@ export class SearchService {
 
   setFilterTerm(term: string) {
     this.filterTerm.next(term);
+  }
+
+  setItems(items: SearchItemData[]): void {
+    this.itemsSubject.next(items);
+  }
+
+  getItemById(id: string): Observable<SearchItemData | undefined> {
+    return this.items$.pipe(map((items) => items.find((item) => item.id === id)));
   }
 }

@@ -29,5 +29,6 @@
   <mat-card-content class="card-content">
     <mat-card-title>{{item.snippet.title}}</mat-card-title>
   </mat-card-content>
-  <app-custom-button class="card-button">more...</app-custom-button>
+  <app-custom-button class="card-button"
+                     [routerLink]="['/video', item.id]">more...</app-custom-button>
 </mat-card>

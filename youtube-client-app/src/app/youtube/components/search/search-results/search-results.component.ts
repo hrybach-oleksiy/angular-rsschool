@@ -34,6 +34,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.http.get<SearchResultsData>('api/response.json').subscribe((data) => {
       this.items = data.items;
+      this.searchService.setItems(this.items);
       this.applyFilters();
     });
 

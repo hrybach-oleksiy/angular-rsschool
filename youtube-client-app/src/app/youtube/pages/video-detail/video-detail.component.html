@@ -1,0 +1,37 @@
+@if (video) {
+<mat-card class="video-card">
+  <div class="video-image-wrapper">
+    <img mat-card-image
+         [src]="video.snippet.thumbnails.maxres?.url"
+         alt="{{ video.snippet.title }}"
+         class="video-image">
+  </div>
+  <mat-card-content class="video-content">
+    <mat-card-title>{{ video.snippet.title }}</mat-card-title>
+    <p>{{ video.snippet.publishedAt | date }}</p>
+    <p>{{ video.snippet.description }}</p>
+    <div>
+      <button mat-icon-button
+              aria-label="Views">
+        <mat-icon>visibility</mat-icon>
+        <span class="counts">{{ video.statistics.viewCount }}</span>
+      </button>
+      <button mat-icon-button
+              aria-label="Likes">
+        <mat-icon>thumb_up</mat-icon>
+        <span class="counts">{{ video.statistics.likeCount }}</span>
+      </button>
+      <button mat-icon-button
+              aria-label="Dislikes">
+        <mat-icon>thumb_down</mat-icon>
+        <span class="counts">{{ video.statistics.dislikeCount }}</span>
+      </button>
+      <button mat-icon-button
+              aria-label="Comments">
+        <mat-icon>comment</mat-icon>
+        <span class="counts">{{ video.statistics.commentCount }}</span>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+}
