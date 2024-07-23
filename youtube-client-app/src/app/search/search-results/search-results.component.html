@@ -2,7 +2,7 @@
   @if(showResults && filteredItems.length > 0) {
   @for (item of (items | filter:searchTerm:filterTerm); track item.snippet.title) {
   <li class="item">
-    <app-search-item [item]="item"></app-search-item>
+    <app-search-item [item]="item" />
   </li>
   }
   }
