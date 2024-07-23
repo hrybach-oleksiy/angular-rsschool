@@ -56,7 +56,8 @@
                       "prefix": "app",
                       "style": "kebab-case"
                   }
-              ]
+              ],
+              "@angular-eslint/template/prefer-self-closing-tags": ["error"]
           }
       },
       {

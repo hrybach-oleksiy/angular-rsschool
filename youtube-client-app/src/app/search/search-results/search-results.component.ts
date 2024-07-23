@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { FilterPipe } from '../../pipes/filter.pipe';
   imports: [SearchItemComponent, FilterPipe],
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
   public items: SearchItemData[] = [];
