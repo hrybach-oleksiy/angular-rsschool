@@ -15,7 +15,11 @@ mat-card-content {
   justify-content: center;
 }
 
+mat-card-title {
+  margin-bottom: 2rem;
+}
+
 .button {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
