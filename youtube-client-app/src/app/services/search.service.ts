@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+import { SortType } from '../types/enums';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -8,9 +10,9 @@ export class SearchService {
   private searchQuery = new BehaviorSubject<string>('');
   searchQuery$ = this.searchQuery.asObservable();
 
-  private sortConfig = new BehaviorSubject<{ criteria: string; direction: string }>({
-    criteria: 'date',
-    direction: 'asc',
+  private sortConfig = new BehaviorSubject<{ criteria: SortType; direction: SortType }>({
+    criteria: SortType.DATE,
+    direction: SortType.ASC,
   });
   sortConfig$ = this.sortConfig.asObservable();
 
@@ -21,7 +23,7 @@ export class SearchService {
     this.searchQuery.next(query);
   }
 
-  setSortConfig(config: { criteria: string; direction: string }) {
+  setSortConfig(config: { criteria: SortType; direction: SortType }) {
     this.sortConfig.next(config);
   }
 

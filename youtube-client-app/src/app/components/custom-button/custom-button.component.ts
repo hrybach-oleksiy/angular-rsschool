@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -7,8 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule],
   templateUrl: './custom-button.component.html',
   styleUrl: './custom-button.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomButtonComponent {
-  @Input() color: string = 'red';
-  @Input() borderRadius: string = '4px';
-}
+export class CustomButtonComponent {}

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { SearchInputComponent } from '../../components/search-input/search-input.component';
 import { SearchService } from '../../services/search.service';
+
+import { SortType } from '../../types/enums';
 
 @Component({
   selector: 'app-header',
@@ -25,25 +27,25 @@ import { SearchService } from '../../services/search.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  showSortBlock: boolean = false;
-  sortCriteria: string = 'date';
-  sortDirection: string = 'asc';
-  filterTerm: string = '';
+  showSortBlock = signal(false);
+  sortCriteria = signal<SortType>(SortType.DATE);
+  sortDirection = signal<SortType>(SortType.ASC);
+  filterTerm = signal('');
 
-  constructor(private searchService: SearchService) {}
+  private readonly searchService = inject(SearchService);
 
   toggleSortBlock() {
-    this.showSortBlock = !this.showSortBlock;
+    this.showSortBlock.set(!this.showSortBlock());
   }
 
   onSortChange() {
     this.searchService.setSortConfig({
-      criteria: this.sortCriteria,
-      direction: this.sortDirection,
+      criteria: this.sortCriteria(),
+      direction: this.sortDirection(),
     });
   }
 
   onFilterChange() {
-    this.searchService.setFilterTerm(this.filterTerm);
+    this.searchService.setFilterTerm(this.filterTerm());
   }
 }
