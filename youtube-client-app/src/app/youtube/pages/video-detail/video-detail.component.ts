@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +14,7 @@ import { CustomButtonComponent } from '../../../shared/components/custom-button/
   imports: [MatCardModule, MatIconModule, CommonModule, CustomButtonComponent],
   templateUrl: './video-detail.component.html',
   styleUrl: './video-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VideoDetailComponent implements OnInit {
   public video: SearchItemData | undefined;

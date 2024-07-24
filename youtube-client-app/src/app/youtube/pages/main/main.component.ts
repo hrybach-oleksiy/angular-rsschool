@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SearchResultsComponent } from '../../components/search/search-results/search-results.component';
 import { HeaderComponent } from '../../../core/components/header/header.component';
 
@@ -8,5 +8,6 @@ import { HeaderComponent } from '../../../core/components/header/header.componen
   imports: [SearchResultsComponent, HeaderComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {}
