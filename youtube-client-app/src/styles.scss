@@ -22,4 +22,12 @@ ul {
   max-width: 1480px;
   margin: 0 auto;
   padding: 0 16px;
+  height: 100%;
+}
+
+.main {
+  height: 100%;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }

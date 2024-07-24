@@ -1,6 +1,7 @@
 .video-card {
   flex-direction: row;
   align-items: center;
+  max-width: 900px;
 
   @media (max-width: 1199px) {
     flex-direction: column;
