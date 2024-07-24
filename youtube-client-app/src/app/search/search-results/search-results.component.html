@@ -1,13 +1,13 @@
 <ul class="items-list">
   @if(showResults() && filteredItems().length > 0) {
-  @for (item of (items() | filter:searchTerm():filterTerm()); track item.snippet.title) {
+  @for (item of (filteredItems()| filter:searchTerm():filterTerm()); track item.snippet.title) {
   <li class="item">
     <app-search-item [item]="item" />
   </li>
   }
   }
 
-  @if (showResults() && (items() | filter:searchTerm():filterTerm()).length === 0) {
+  @if (showResults() && (filteredItems() | filter:searchTerm():filterTerm()).length === 0) {
   <div class="not-found">
     No results found
   </div>

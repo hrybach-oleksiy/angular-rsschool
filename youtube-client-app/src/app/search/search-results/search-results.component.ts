@@ -59,7 +59,7 @@ export class SearchResultsComponent implements OnInit {
   private sortItems() {
     const { criteria, direction } = this.sortConfig();
 
-    [...this.filteredItems()].sort((a, b) => {
+    this.filteredItems().sort((a, b) => {
       const valueA =
         criteria === SortType.DATE ? new Date(a.snippet.publishedAt).getTime() : parseInt(a.statistics.viewCount, 10);
       const valueB =
