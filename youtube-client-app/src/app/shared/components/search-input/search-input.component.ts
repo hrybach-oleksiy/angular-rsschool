@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,13 +12,13 @@ import { SearchService } from '../../../youtube/services/search.service';
   imports: [MatInputModule, MatIconModule, MatFormFieldModule, FormsModule, CustomButtonComponent],
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent {
-  searchQuery: string = '';
-
-  constructor(private searchService: SearchService) {}
+  public searchQuery: WritableSignal<string> = signal('');
+  private readonly searchService = inject(SearchService);
 
   onSearch() {
-    this.searchService.setSearchQuery(this.searchQuery);
+    this.searchService.setSearchQuery(this.searchQuery());
   }
 }

@@ -4,14 +4,14 @@
   </div>
   <div class="controls-block">
     <div class="search-block">
-      <app-search-input></app-search-input>
+      <app-search-input />
       <button mat-icon-button
               (click)="toggleSortBlock()">
-        <mat-icon>{{ showSortBlock ? 'close' : 'settings' }}</mat-icon>
+        <mat-icon>{{ showSortBlock() ? 'close' : 'settings' }}</mat-icon>
       </button>
     </div>
     <div class="sort-block"
-         [class.show]="showSortBlock">
+         [class.show]="showSortBlock()">
       <mat-form-field appearance="fill">
         <mat-label>Sort by</mat-label>
         <mat-select [(ngModel)]="sortCriteria"

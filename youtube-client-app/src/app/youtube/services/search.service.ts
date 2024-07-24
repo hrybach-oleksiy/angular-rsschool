@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SearchItemData } from '../../types/interfaces';
 
+import { SortType } from '../../types/enums';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,9 +15,9 @@ export class SearchService {
   public searchQuery$ = this.searchQuery.asObservable();
   public items$ = this.itemsSubject.asObservable();
 
-  private sortConfig = new BehaviorSubject<{ criteria: string; direction: string }>({
-    criteria: 'date',
-    direction: 'asc',
+  private sortConfig = new BehaviorSubject<{ criteria: SortType; direction: SortType }>({
+    criteria: SortType.DATE,
+    direction: SortType.ASC,
   });
   sortConfig$ = this.sortConfig.asObservable();
 
@@ -26,7 +28,7 @@ export class SearchService {
     this.searchQuery.next(query);
   }
 
-  setSortConfig(config: { criteria: string; direction: string }) {
+  setSortConfig(config: { criteria: SortType; direction: SortType }) {
     this.sortConfig.next(config);
   }
 

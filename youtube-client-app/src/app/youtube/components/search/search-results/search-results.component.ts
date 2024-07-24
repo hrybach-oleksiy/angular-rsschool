@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Subscription } from 'rxjs';
 import { SearchItemComponent } from '../search-item/search-item.component';
 import { SearchItemData, SearchResultsData } from '../../../../types/interfaces';
 import { SearchService } from '../../../services/search.service';
 import { FilterPipe } from '../../../pipes/filter.pipe';
+
+import { SortType } from '../../../../types/enums';
 
 @Component({
   selector: 'app-search-results',
@@ -14,17 +15,13 @@ import { FilterPipe } from '../../../pipes/filter.pipe';
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
-export class SearchResultsComponent implements OnInit, OnDestroy {
-  public items: SearchItemData[] = [];
-  public filteredItems: SearchItemData[] = [];
-  public showResults: boolean = false;
-  public searchTerm: string = '';
-  private sortConfig = { criteria: 'date', direction: 'asc' };
-  public filterTerm: string = '';
-
-  private searchSubscription!: Subscription;
-  private sortSubscription!: Subscription;
-  private filterSubscription!: Subscription;
+export class SearchResultsComponent implements OnInit {
+  public items = signal<SearchItemData[]>([]);
+  public filteredItems = signal<SearchItemData[]>([]);
+  public showResults = signal(false);
+  private sortConfig = signal({ criteria: SortType.DATE, direction: SortType.ASC });
+  public searchTerm = signal('');
+  public filterTerm = signal('');
 
   constructor(
     private http: HttpClient,
@@ -33,66 +30,58 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.http.get<SearchResultsData>('api/response.json').subscribe((data) => {
-      this.items = data.items;
-      this.searchService.setItems(this.items);
+      this.items.set(data.items);
+      this.searchService.setItems(this.items());
       this.applyFilters();
     });
 
-    this.searchSubscription = this.searchService.searchQuery$.subscribe((query) => {
+    this.searchService.searchQuery$.subscribe((query) => {
       if (query) {
-        this.searchTerm = query;
+        this.searchTerm.set(query);
         this.applyFilters();
-        this.showResults = true;
+        this.showResults.set(true);
       } else {
-        this.filteredItems = [];
-        this.showResults = false;
+        this.filteredItems.set([]);
+        this.showResults.set(false);
       }
     });
 
-    this.sortSubscription = this.searchService.sortConfig$.subscribe((config) => {
-      this.sortConfig = config;
+    this.searchService.sortConfig$.subscribe((config) => {
+      this.sortConfig.set(config);
       this.applyFilters();
     });
 
-    this.filterSubscription = this.searchService.filterTerm$.subscribe((term) => {
-      this.filterTerm = term;
+    this.searchService.filterTerm$.subscribe((term) => {
+      this.filterTerm.set(term);
       this.applyFilters();
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
-    if (this.sortSubscription) {
-      this.sortSubscription.unsubscribe();
-    }
-
-    if (this.filterSubscription) {
-      this.filterSubscription?.unsubscribe();
-    }
   }
 
   private sortItems() {
-    const { criteria, direction } = this.sortConfig;
-    this.filteredItems.sort((a, b) => {
-      const valueA =
-        criteria === 'date' ? new Date(a.snippet.publishedAt).getTime() : parseInt(a.statistics.viewCount, 10);
-      const valueB =
-        criteria === 'date' ? new Date(b.snippet.publishedAt).getTime() : parseInt(b.statistics.viewCount, 10);
+    const { criteria, direction } = this.sortConfig();
 
-      return direction === 'asc' ? valueA - valueB : valueB - valueA;
+    this.filteredItems().sort((a, b) => {
+      const valueA =
+        criteria === SortType.DATE ? new Date(a.snippet.publishedAt).getTime() : parseInt(a.statistics.viewCount, 10);
+      const valueB =
+        criteria === SortType.DATE ? new Date(b.snippet.publishedAt).getTime() : parseInt(b.statistics.viewCount, 10);
+
+      return direction === SortType.ASC ? valueA - valueB : valueB - valueA;
     });
   }
 
   private applyFilters() {
-    this.filteredItems = this.items
-      .filter((item) => item.snippet.title.toLowerCase().includes(this.searchTerm.toLowerCase()))
-      .filter(
+    const searchTerm = this.searchTerm().toLowerCase();
+    const filterTerm = this.filterTerm().toLowerCase();
+
+    this.filteredItems.set(
+      this.items().filter(
         (item) =>
-          item.snippet.description.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-          item.snippet.title.toLowerCase().includes(this.filterTerm.toLowerCase()),
-      );
+          item.snippet.title.toLowerCase().includes(searchTerm) &&
+          (item.snippet.description.toLowerCase().includes(filterTerm) ||
+            item.snippet.title.toLowerCase().includes(filterTerm)),
+      ),
+    );
     this.sortItems();
   }
 }

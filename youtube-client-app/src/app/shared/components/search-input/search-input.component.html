@@ -6,11 +6,11 @@
     <input matInput
            type="text"
            [(ngModel)]="searchQuery">
-    @if (searchQuery) {
+    @if (searchQuery()) {
     <button matSuffix
             mat-icon-button
             aria-label="Clear"
-            (click)="searchQuery=''">
+            (click)="searchQuery.set('')">
       <mat-icon>close</mat-icon>
     </button>
     }

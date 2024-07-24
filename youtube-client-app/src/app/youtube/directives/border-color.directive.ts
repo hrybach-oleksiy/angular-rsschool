@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, HostBinding, Input, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appBorderColor]',
@@ -7,29 +7,29 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 export class BorderColorDirective implements OnInit {
   @Input('appBorderColor') publishedAt!: string;
 
-  constructor(private el: ElementRef) {}
+  @HostBinding('style.border-bottom') borderColor!: string;
 
-  ngOnInit() {
-    this.updateBorderColor();
+  ngOnInit(): void {
+    this.borderColor = `4px solid ${this.getColor()}`;
   }
 
-  private updateBorderColor() {
-    const currentDate = new Date();
-    const publishedDate = new Date(this.publishedAt);
-    const differenceInDays = Math.floor((currentDate.getTime() - publishedDate.getTime()) / (1000 * 60 * 60 * 24));
-
-    let borderColor: string;
-
-    if (differenceInDays > 180) {
-      borderColor = 'red';
-    } else if (differenceInDays > 30) {
-      borderColor = 'yellow';
-    } else if (differenceInDays > 7) {
-      borderColor = 'green';
-    } else {
-      borderColor = 'blue';
+  private getColor(): string {
+    const daysDifference = this.getDaysDifference();
+    if (daysDifference > 180) {
+      return 'red';
     }
+    if (daysDifference > 30) {
+      return 'yellow';
+    }
+    if (daysDifference > 7) {
+      return 'green';
+    }
+    return 'blue';
+  }
 
-    this.el.nativeElement.style.borderBottom = `4px solid ${borderColor}`;
+  private getDaysDifference(): number {
+    const currentDate = new Date().getTime();
+    const publishedDate = new Date(this.publishedAt).getTime();
+    return Math.floor((currentDate - publishedDate) / (1000 * 3600 * 24));
   }
 }

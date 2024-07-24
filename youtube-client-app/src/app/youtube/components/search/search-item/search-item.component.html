@@ -1,34 +1,21 @@
 <mat-card class="item-card"
           appearance="outlined"
-          [appBorderColor]="item.snippet.publishedAt">
+          [appBorderColor]="item().snippet.publishedAt">
   <img mat-card-image
-       [src]="item.snippet.thumbnails.medium.url"
-       alt="{{ item.snippet.title }}">
+       [src]="item().snippet.thumbnails.medium.url"
+       alt="{{ item().snippet.title }}">
   <mat-card-actions>
+    @for (stat of itemsStats; track stat.label) {
     <button mat-icon-button
-            aria-label="Views">
-      <mat-icon>visibility</mat-icon>
-      <span class="counts">{{ item.statistics.viewCount }}</span>
+            [attr.aria-label]="stat.label">
+      <mat-icon>{{ stat.icon }}</mat-icon>
+      <span class="counts">{{ item().statistics[stat.property] }}</span>
     </button>
-    <button mat-icon-button
-            aria-label="Likes">
-      <mat-icon>thumb_up</mat-icon>
-      <span class="counts">{{ item.statistics.likeCount }}</span>
-    </button>
-    <button mat-icon-button
-            aria-label="Dislikes">
-      <mat-icon>thumb_down</mat-icon>
-      <span class="counts">{{ item.statistics.dislikeCount }}</span>
-    </button>
-    <button mat-icon-button
-            aria-label="Comments">
-      <mat-icon>comment</mat-icon>
-      <span class="counts">{{ item.statistics.commentCount }}</span>
-    </button>
+    }
   </mat-card-actions>
   <mat-card-content class="card-content">
-    <mat-card-title>{{item.snippet.title}}</mat-card-title>
+    <mat-card-title>{{item().snippet.title}}</mat-card-title>
   </mat-card-content>
   <app-custom-button class="card-button"
-                     [routerLink]="['/video', item.id]">more...</app-custom-button>
+                     [routerLink]="['/video', item().id]">more...</app-custom-button>
 </mat-card>
