@@ -5,10 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SearchInputComponent } from '../../../shared/components/search-input/search-input.component';
 import { SearchService } from '../../../youtube/services/search.service';
 
 import { SortType } from '../../../types/enums';
+import { LoginService } from '../../../auth/services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +35,8 @@ export class HeaderComponent {
   filterTerm = signal('');
 
   private readonly searchService = inject(SearchService);
+  private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
 
   toggleSortBlock() {
     this.showSortBlock.set(!this.showSortBlock());
@@ -47,5 +51,10 @@ export class HeaderComponent {
 
   onFilterChange() {
     this.searchService.setFilterTerm(this.filterTerm());
+  }
+
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }

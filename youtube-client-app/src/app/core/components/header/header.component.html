@@ -39,9 +39,11 @@
     </div>
   </div>
   <div class="login">
-    <button mat-button>
+    <button mat-button
+            (click)="logout()"
+            class="header-btn">
       <mat-icon>person</mat-icon>
-      Login
+      Logout
     </button>
   </div>
 </header>
