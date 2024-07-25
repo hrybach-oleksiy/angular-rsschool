@@ -2,7 +2,39 @@
   <mat-card>
     <mat-card-title>Login</mat-card-title>
     <mat-card-content>
-      <form (ngSubmit)="login()">
+      <form [formGroup]="loginForm"
+            (ngSubmit)="onLogin()">
+        <p>
+          <mat-form-field>
+            <input type="text"
+                   required
+                   matInput
+                   placeholder="Username"
+                   name="username"
+                   (blur)="updateErrorMessage()"
+                   formControlName="username">
+            @if (username?.invalid) {
+            <mat-error>{{errorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="password"
+                   required
+                   matInput
+                   placeholder="Password"
+                   name="password"
+                   formControlName="password">
+          </mat-form-field>
+        </p>
+        <div class="button">
+          <app-custom-button type="submit"
+                             color="primary"
+                             mat-button>Login</app-custom-button>
+        </div>
+      </form>
+      <!-- <form (ngSubmit)="login()">
         <p>
           <mat-form-field>
             <input type="text"
@@ -27,7 +59,7 @@
                              color="primary"
                              mat-button>Login</app-custom-button>
         </div>
-      </form>
+      </form> -->
     </mat-card-content>
   </mat-card>
 </div>
