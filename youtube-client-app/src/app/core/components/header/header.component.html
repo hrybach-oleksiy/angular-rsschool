@@ -40,10 +40,10 @@
   </div>
   <div class="login">
     <button mat-button
-            (click)="logout()"
+            (click)="handleButtonClick()"
             class="header-btn">
       <mat-icon>person</mat-icon>
-      Logout
+      {{ isLoggedIn() ? 'Logout' : 'Login' }}
     </button>
   </div>
 </header>

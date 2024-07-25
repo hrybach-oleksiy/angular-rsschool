@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -38,6 +38,8 @@ export class HeaderComponent {
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
+  isLoggedIn = computed(() => this.loginService.isLoggedIn());
+
   toggleSortBlock() {
     this.showSortBlock.set(!this.showSortBlock());
   }
@@ -51,6 +53,14 @@ export class HeaderComponent {
 
   onFilterChange() {
     this.searchService.setFilterTerm(this.filterTerm());
+  }
+
+  handleButtonClick(): void {
+    if (this.isLoggedIn()) {
+      this.logout();
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   logout() {
