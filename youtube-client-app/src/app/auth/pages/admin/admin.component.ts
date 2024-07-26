@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
 import { LoginService } from '../../services/login.service';
 import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
 
@@ -28,6 +29,7 @@ import { CustomButtonComponent } from '../../../shared/components/custom-button/
     ReactiveFormsModule,
     FormsModule,
     MatDatepickerModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './admin.component.html',
@@ -39,8 +41,7 @@ export class AdminComponent {
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
 
-  public emailErrorMessage = signal('');
-  // public passwordErrorMessage = signal('');
+  public tagErrorMessage = signal('');
 
   public adminForm = this.formBuilder.group({
     title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -71,7 +72,7 @@ export class AdminComponent {
     return this.adminForm.get('creationDate');
   }
 
-  get tags() {
+  get tags(): FormArray {
     return this.adminForm.get('tags') as FormArray;
   }
 
@@ -82,8 +83,12 @@ export class AdminComponent {
   }
 
   addTag() {
-    if (this.tags.length < 5) {
+    const lastTag = this.tags.at(this.tags.length - 1);
+    if (lastTag && lastTag.invalid) {
+      this.tagErrorMessage.set('Please fill out the current tag before adding a new one.');
+    } else if (this.tags.length < 5) {
       this.tags.push(this.createTag());
+      this.tagErrorMessage.set('');
     }
   }
 
@@ -96,26 +101,6 @@ export class AdminComponent {
     this.tags.clear();
     this.tags.push(this.createTag());
   }
-
-  // public updateEmailErrorMessage() {
-  //   if (this.username?.hasError('required')) {
-  //     this.emailErrorMessage.set('Please enter a login email');
-  //   } else if (this.username?.hasError('email')) {
-  //     this.emailErrorMessage.set('The login email is invalid');
-  //   } else {
-  //     this.emailErrorMessage.set('');
-  //   }
-  // }
-
-  // public updatePasswordErrorMessage() {
-  //   if (this.password?.hasError('required')) {
-  //     return 'Please enter a password';
-  //   }
-  //   if (this.password?.hasError('passwordStrength')) {
-  //     return this.password.errors?.['passwordStrength'];
-  //   }
-  //   return '';
-  // }
 
   static dateNotInFuture(control: AbstractControl): { [key: string]: boolean } | null {
     console.log(control.value);

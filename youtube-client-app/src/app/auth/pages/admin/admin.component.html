@@ -72,23 +72,34 @@
             }
           </mat-form-field>
         </p>
-        <!-- <div formArrayName="tags">
-          <div *ngFor="let tag of tags.controls; let i = index"
-               [formGroupName]="i">
+        <div formArrayName="tags"
+             class="tags">
+
+          @for (tag of tags.controls; track $index) {
+          <div [formGroupName]="$index">
             <mat-form-field>
-              <mat-label>Tag {{i + 1}}</mat-label>
+              <mat-label>Tag {{$index + 1}}</mat-label>
               <input matInput
                      formControlName="name" />
-              <mat-error *ngIf="tag.controls.name.hasError('required')">Tag is required</mat-error>
+              @if (tagErrorMessage()) {
+              <mat-error>{{tagErrorMessage()}}</mat-error>
+              }
+              @if (tag.get('name')?.hasError('required')) {
+              <mat-error>Tag is required</mat-error>
+              }
             </mat-form-field>
             <button mat-button
                     type="button"
-                    (click)="removeTag(i)">Remove</button>
+                    class="remove-btn"
+                    (click)="removeTag($index)">
+              <mat-icon>close</mat-icon>
+            </button>
           </div>
+          }
           <button mat-button
                   type="button"
                   (click)="addTag()">Add Tag</button>
-        </div> -->
+        </div>
         <div class="button-wrapper">
           <div class="button">
             <app-custom-button type="submit"
