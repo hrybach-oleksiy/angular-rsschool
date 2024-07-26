@@ -103,7 +103,6 @@ export class AdminComponent {
   }
 
   static dateNotInFuture(control: AbstractControl): { [key: string]: boolean } | null {
-    console.log(control.value);
     const date = new Date(control.value);
     const today = new Date();
     if (date > today) {
