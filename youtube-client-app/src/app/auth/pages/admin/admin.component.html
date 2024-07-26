@@ -1,0 +1,110 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-title>Create New Card</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="adminForm"
+            (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input type="text"
+                   required
+                   matInput
+                   name="title"
+                   formControlName="title">
+            @if (title?.hasError('required')) {
+            <mat-error>Please enter a title</mat-error>
+            }
+            @if (title?.hasError('minlength')) {
+            <mat-error>The title is too short</mat-error>
+            }
+            @if (title?.hasError('maxlength')) {
+            <mat-error>The title is too long</mat-error>
+            }
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Description (optional)</mat-label>
+            <textarea matInput
+                      formControlName="description"></textarea>
+            @if (description?.hasError('maxlength')) {
+            <mat-error>The description is too long</mat-error>
+            }
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Link to Image Cover</mat-label>
+            <input matInput
+                   formControlName="imageLink" />
+            @if (imageLink?.hasError('required')) {
+            <mat-error>Please enter a link to the image</mat-error>
+            }
+
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Link to Video</mat-label>
+            <input matInput
+                   formControlName="videoLink" />
+            @if (videoLink?.hasError('required')) {
+            <mat-error>Please enter a link to the video</mat-error>
+            }
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Creation Date</mat-label>
+            <input matInput
+                   [matDatepicker]="picker"
+                   formControlName="creationDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix
+                                   [for]="picker" />
+            <mat-datepicker #picker />
+            @if (creationDate?.hasError('required')) {
+            <mat-error>Please enter a creation date</mat-error>
+            }
+            @if (creationDate?.hasError('futureDate')) {
+            <mat-error>The date is invalid</mat-error>
+            }
+          </mat-form-field>
+        </p>
+        <!-- <div formArrayName="tags">
+          <div *ngFor="let tag of tags.controls; let i = index"
+               [formGroupName]="i">
+            <mat-form-field>
+              <mat-label>Tag {{i + 1}}</mat-label>
+              <input matInput
+                     formControlName="name" />
+              <mat-error *ngIf="tag.controls.name.hasError('required')">Tag is required</mat-error>
+            </mat-form-field>
+            <button mat-button
+                    type="button"
+                    (click)="removeTag(i)">Remove</button>
+          </div>
+          <button mat-button
+                  type="button"
+                  (click)="addTag()">Add Tag</button>
+        </div> -->
+        <div class="button-wrapper">
+          <div class="button">
+            <app-custom-button type="submit"
+                               color="primary"
+                               [disabled]="adminForm.invalid"
+                               mat-button>Create Card</app-custom-button>
+          </div>
+          <div class="button">
+            <app-custom-button type="button"
+                               color="primary"
+                               (click)="resetForm()"
+                               mat-button>Reset</app-custom-button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

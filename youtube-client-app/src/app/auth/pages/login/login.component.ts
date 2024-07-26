@@ -86,9 +86,9 @@ export class LoginComponent {
   }
 
   public onLogin() {
-    // this.loginService.login().subscribe(() => {
-    //   this.router.navigate(['/main']);
-    // });
+    this.loginService.login().subscribe(() => {
+      this.router.navigate(['/main']);
+    });
     console.log(this.loginForm.value);
   }
 }

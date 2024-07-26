@@ -1,0 +1,21 @@
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 500px;
+
+  @media (max-width: 699px) {
+    width: 300px;
+  }
+}
+
+mat-card-title {
+  margin-bottom: 2rem;
+}
