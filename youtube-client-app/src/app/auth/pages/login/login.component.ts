@@ -21,7 +21,6 @@ export class LoginComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   public emailErrorMessage = signal('');
-  // public passwordErrorMessage = signal('');
 
   public loginForm = this.formBuilder.group({
     username: ['', [Validators.required, Validators.email]],
