@@ -1,8 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { SearchItemComponent } from '../search-item/search-item.component';
-import { SearchItemData, SearchResultsData } from '../../../../types/interfaces';
+import { SearchItemData } from '../../../../types/interfaces';
 import { SearchService } from '../../../services/search.service';
 import { FilterPipe } from '../../../pipes/filter.pipe';
 
@@ -19,25 +17,17 @@ export class SearchResultsComponent implements OnInit {
   public items = signal<SearchItemData[]>([]);
   public filteredItems = signal<SearchItemData[]>([]);
   public showResults = signal(false);
+
   private sortConfig = signal({ criteria: SortType.DATE, direction: SortType.ASC });
-  public searchTerm = signal('');
+
   public filterTerm = signal('');
 
-  constructor(
-    private http: HttpClient,
-    private searchService: SearchService,
-  ) {}
+  private readonly searchService = inject(SearchService);
 
   ngOnInit(): void {
-    this.http.get<SearchResultsData>('api/response.json').subscribe((data) => {
-      this.items.set(data.items);
-      this.searchService.setItems(this.items());
-      this.applyFilters();
-    });
-
-    this.searchService.searchQuery$.subscribe((query) => {
-      if (query) {
-        this.searchTerm.set(query);
+    this.searchService.items$.subscribe((items) => {
+      if (items.length > 0) {
+        this.items.set(items);
         this.applyFilters();
         this.showResults.set(true);
       } else {
@@ -71,15 +61,13 @@ export class SearchResultsComponent implements OnInit {
   }
 
   private applyFilters() {
-    const searchTerm = this.searchTerm().toLowerCase();
     const filterTerm = this.filterTerm().toLowerCase();
 
     this.filteredItems.set(
       this.items().filter(
         (item) =>
-          item.snippet.title.toLowerCase().includes(searchTerm) &&
-          (item.snippet.description.toLowerCase().includes(filterTerm) ||
-            item.snippet.title.toLowerCase().includes(filterTerm)),
+          item.snippet.description.toLowerCase().includes(filterTerm) ||
+          item.snippet.title.toLowerCase().includes(filterTerm),
       ),
     );
     this.sortItems();

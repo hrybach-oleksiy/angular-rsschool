@@ -40,13 +40,11 @@ export interface Snippet {
   categoryId: string;
   liveBroadcastContent: string;
   localized: Localized;
-  defaultAudioLanguage: string;
 }
 
 export interface Statistics {
   viewCount: string;
   likeCount: string;
-  dislikeCount: string;
   favoriteCount: string;
   commentCount: string;
 }
@@ -54,7 +52,10 @@ export interface Statistics {
 export interface SearchItemData {
   kind: string;
   etag: string;
-  id: string;
+  id: {
+    kind: string;
+    videoId: string;
+  };
   snippet: Snippet;
   statistics: Statistics;
 }

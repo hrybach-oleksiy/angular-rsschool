@@ -33,7 +33,7 @@ export class SearchInputComponent implements OnInit {
         distinctUntilChanged(),
         filter((query) => query.length >= 3),
         switchMap((query) => {
-          this.searchService.setSearchQuery(query);
+          this.searchService.searchVideos(query);
           return of(null);
         }),
       )

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, switchMap } from 'rxjs/operators';
 import { SearchItemData } from '../../types/interfaces';
 
 import { SortType } from '../../types/enums';
@@ -9,11 +10,13 @@ import { SortType } from '../../types/enums';
   providedIn: 'root',
 })
 export class SearchService {
-  private items: SearchItemData[] = [];
-  private searchQuery = new BehaviorSubject<string>('');
+  private searchApiUrl = 'https://www.googleapis.com/youtube/v3/search';
+  private videosApiUrl = 'https://www.googleapis.com/youtube/v3/videos';
+  private apiKey = 'AIzaSyBGIs4LV1iC5Ukvjf1IlDuxp4uN6HQmxfo';
   private itemsSubject = new BehaviorSubject<SearchItemData[]>([]);
-  public searchQuery$ = this.searchQuery.asObservable();
   public items$ = this.itemsSubject.asObservable();
+
+  private readonly http = inject(HttpClient);
 
   private sortConfig = new BehaviorSubject<{ criteria: SortType; direction: SortType }>({
     criteria: SortType.DATE,
@@ -24,23 +27,48 @@ export class SearchService {
   private filterTerm = new BehaviorSubject<string>('');
   filterTerm$ = this.filterTerm.asObservable();
 
-  setSearchQuery(query: string) {
-    this.searchQuery.next(query);
+  public searchVideos(query: string): void {
+    const params = new HttpParams()
+      .set('key', this.apiKey)
+      .set('type', 'video')
+      .set('part', 'snippet')
+      .set('maxResults', '6')
+      .set('q', query);
+
+    this.http
+      .get<{ items: SearchItemData[] }>(this.searchApiUrl, { params })
+      .pipe(
+        map((response) => response.items),
+        switchMap((items) => {
+          const videoIds = items.map((item) => item.id.videoId).join(',');
+
+          return this.getVideoStatistics(videoIds);
+        }),
+      )
+      .subscribe((items) => this.itemsSubject.next(items));
   }
 
-  setSortConfig(config: { criteria: SortType; direction: SortType }) {
+  private getVideoStatistics(videoIds: string): Observable<SearchItemData[]> {
+    const params = new HttpParams().set('key', this.apiKey).set('part', 'snippet,statistics').set('id', videoIds);
+
+    return this.http
+      .get<{ items: SearchItemData[] }>(this.videosApiUrl, { params })
+      .pipe(map((response) => response.items));
+  }
+
+  public setSortConfig(config: { criteria: SortType; direction: SortType }): void {
     this.sortConfig.next(config);
   }
 
-  setFilterTerm(term: string) {
+  public setFilterTerm(term: string): void {
     this.filterTerm.next(term);
   }
 
-  setItems(items: SearchItemData[]): void {
+  public setItems(items: SearchItemData[]): void {
     this.itemsSubject.next(items);
   }
 
-  getItemById(id: string): Observable<SearchItemData | undefined> {
-    return this.items$.pipe(map((items) => items.find((item) => item.id === id)));
+  public getItemById(id: string): Observable<SearchItemData | undefined> {
+    return this.items$.pipe(map((items) => items.find((item) => item.id.videoId === id)));
   }
 }

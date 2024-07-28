@@ -7,19 +7,18 @@ import { SearchItemData } from '../../types/interfaces';
 })
 export class FilterPipe implements PipeTransform {
   // eslint-disable-next-line class-methods-use-this
-  transform(items: SearchItemData[], searchTerm: string, filterTerm: string): SearchItemData[] {
+  transform(items: SearchItemData[], filterTerm: string): SearchItemData[] {
     if (!items) return [];
 
     // eslint-disable-next-line no-param-reassign
-    searchTerm = searchTerm.toLowerCase();
+    // searchTerm = searchTerm.toLowerCase();
     // eslint-disable-next-line no-param-reassign
     filterTerm = filterTerm.toLowerCase();
 
     return items.filter(
       (item) =>
-        item.snippet.title.toLowerCase().includes(searchTerm) &&
-        (item.snippet.title.toLowerCase().includes(filterTerm) ||
-          item.snippet.description.toLowerCase().includes(filterTerm)),
+        item.snippet.title.toLowerCase().includes(filterTerm) ||
+        item.snippet.description.toLowerCase().includes(filterTerm),
     );
   }
 }
