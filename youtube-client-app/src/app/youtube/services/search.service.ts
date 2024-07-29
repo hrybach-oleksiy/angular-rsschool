@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
-import { SearchItemData } from '../../types/interfaces';
+import { SearchItemData, SortConfigData } from '../../types/interfaces';
 
 import { SortType } from '../../types/enums';
 
@@ -10,9 +10,6 @@ import { SortType } from '../../types/enums';
   providedIn: 'root',
 })
 export class SearchService {
-  private searchApiUrl = 'https://www.googleapis.com/youtube/v3/search';
-  private videosApiUrl = 'https://www.googleapis.com/youtube/v3/videos';
-  private apiKey = 'AIzaSyBGIs4LV1iC5Ukvjf1IlDuxp4uN6HQmxfo';
   private itemsSubject = new BehaviorSubject<SearchItemData[]>([]);
   public items$ = this.itemsSubject.asObservable();
 
@@ -28,15 +25,10 @@ export class SearchService {
   filterTerm$ = this.filterTerm.asObservable();
 
   public searchVideos(query: string): void {
-    const params = new HttpParams()
-      .set('key', this.apiKey)
-      .set('type', 'video')
-      .set('part', 'snippet')
-      .set('maxResults', '6')
-      .set('q', query);
+    const params = new HttpParams().set('type', 'video').set('part', 'snippet').set('maxResults', '6').set('q', query);
 
     this.http
-      .get<{ items: SearchItemData[] }>(this.searchApiUrl, { params })
+      .get<{ items: SearchItemData[] }>('search', { params })
       .pipe(
         map((response) => response.items),
         switchMap((items) => {
@@ -49,14 +41,12 @@ export class SearchService {
   }
 
   private getVideoStatistics(videoIds: string): Observable<SearchItemData[]> {
-    const params = new HttpParams().set('key', this.apiKey).set('part', 'snippet,statistics').set('id', videoIds);
+    const params = new HttpParams().set('part', 'snippet,statistics').set('id', videoIds);
 
-    return this.http
-      .get<{ items: SearchItemData[] }>(this.videosApiUrl, { params })
-      .pipe(map((response) => response.items));
+    return this.http.get<{ items: SearchItemData[] }>('videos', { params }).pipe(map((response) => response.items));
   }
 
-  public setSortConfig(config: { criteria: SortType; direction: SortType }): void {
+  public setSortConfig(config: SortConfigData): void {
     this.sortConfig.next(config);
   }
 

@@ -1,3 +1,5 @@
+import { SortType } from './enums';
+
 export interface SearchResultsData {
   kind: string;
   etag: string;
@@ -58,4 +60,9 @@ export interface SearchItemData {
   };
   snippet: Snippet;
   statistics: Statistics;
+}
+
+export interface SortConfigData {
+  criteria: SortType;
+  direction: SortType;
 }
