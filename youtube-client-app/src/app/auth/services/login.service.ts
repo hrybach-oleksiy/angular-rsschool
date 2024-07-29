@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,9 +6,8 @@ import { Observable, of } from 'rxjs';
 export class LoginService {
   private readonly TOKEN_KEY = 'auth_token';
 
-  public login(): Observable<boolean> {
+  public login(): void {
     localStorage.setItem(this.TOKEN_KEY, 'user-token');
-    return of(true);
   }
 
   public logout(): void {

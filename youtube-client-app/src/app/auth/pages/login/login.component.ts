@@ -26,8 +26,7 @@ export class LoginComponent implements Login {
   ) {}
 
   public login(): void {
-    this.loginService.login().subscribe(() => {
-      this.router.navigate(['/main']);
-    });
+    this.loginService.login();
+    this.router.navigate(['/main']);
   }
 }
