@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="admin-container">
   <mat-card>
     <mat-card-title>Create New Card</mat-card-title>
     <mat-card-content>
@@ -98,13 +98,14 @@
           }
           <button mat-button
                   type="button"
+                  class="tag-button"
                   (click)="addTag()">Add Tag</button>
         </div>
         <div class="button-wrapper">
           <div class="button">
             <app-custom-button type="submit"
                                color="primary"
-                               [disabled]="adminForm.invalid"
+                               [disabled]="!adminForm.valid"
                                mat-button>Create Card</app-custom-button>
           </div>
           <div class="button">

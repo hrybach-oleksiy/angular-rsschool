@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   FormsModule,
   FormBuilder,
@@ -15,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
-import { LoginService } from '../../services/login.service';
 import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
 
 @Component({
@@ -37,8 +35,6 @@ import { CustomButtonComponent } from '../../../shared/components/custom-button/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent {
-  private readonly loginService = inject(LoginService);
-  private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
 
   public tagErrorMessage = signal('');
@@ -85,7 +81,7 @@ export class AdminComponent {
   addTag() {
     const lastTag = this.tags.at(this.tags.length - 1);
     if (lastTag && lastTag.invalid) {
-      this.tagErrorMessage.set('Please fill out the current tag before adding a new one.');
+      this.tagErrorMessage.set('Please fill out the current tag before adding a new one');
     } else if (this.tags.length < 5) {
       this.tags.push(this.createTag());
       this.tagErrorMessage.set('');
@@ -112,9 +108,6 @@ export class AdminComponent {
   }
 
   public onSubmit() {
-    // this.loginService.login().subscribe(() => {
-    //   this.router.navigate(['/main']);
-    // });
     console.log(this.adminForm.value);
   }
 }

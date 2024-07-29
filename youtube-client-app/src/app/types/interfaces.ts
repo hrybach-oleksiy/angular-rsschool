@@ -66,3 +66,8 @@ export interface SortConfigData {
   criteria: SortType;
   direction: SortType;
 }
+
+export interface Login {
+  username: string;
+  password: string;
+}

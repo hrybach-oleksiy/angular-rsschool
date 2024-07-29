@@ -1,16 +1,32 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import {
+  FormsModule,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { LoginService } from '../../services/login.service';
 import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, CustomButtonComponent, ReactiveFormsModule, FormsModule],
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CustomButtonComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    MatButtonModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,7 +71,7 @@ export class LoginComponent {
     return '';
   }
 
-  static passwordStrengthValidator(control: AbstractControl) {
+  static passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
     const { value } = control;
 
     if (!value) {
@@ -68,26 +84,27 @@ export class LoginComponent {
     const hasSpecial = /[!@#$%^&*)(+=._-]/.test(value);
     const hasMinLength = value.length >= 8;
 
-    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecial && hasMinLength;
-
-    if (!passwordValid) {
-      const errors = [];
-      if (!hasUpperCase) errors.push('at least one uppercase letter');
-      if (!hasLowerCase) errors.push('at least one lowercase letter');
-      if (!hasNumeric) errors.push('at least one number');
-      if (!hasSpecial) errors.push('at least one special character');
-      if (!hasMinLength) errors.push('at least 8 characters');
-
-      return { passwordStrength: `Your password isn't strong enough. It should include: ${errors.join(', ')}` };
+    if (!hasMinLength) {
+      return { passwordStrength: 'Your password must be at least 8 characters long.' };
+    }
+    if (!hasUpperCase) {
+      return { passwordStrength: 'Your password must contain at least one uppercase letter.' };
+    }
+    if (!hasLowerCase) {
+      return { passwordStrength: 'Your password must contain at least one lowercase letter.' };
+    }
+    if (!hasNumeric) {
+      return { passwordStrength: 'Your password must contain at least one number.' };
+    }
+    if (!hasSpecial) {
+      return { passwordStrength: 'Your password must contain at least one special character.' };
     }
 
     return null;
   }
 
   public onLogin() {
-    this.loginService.login().subscribe(() => {
-      this.router.navigate(['/main']);
-    });
-    console.log(this.loginForm.value);
+    this.loginService.login();
+    this.router.navigate(['/main']);
   }
 }

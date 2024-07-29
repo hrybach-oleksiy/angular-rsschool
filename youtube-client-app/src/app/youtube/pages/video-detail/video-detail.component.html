@@ -1,40 +1,28 @@
-@if (video) {
+@if (video()) {
 <mat-card class="video-card">
   <div class="video-image-wrapper">
     <img mat-card-image
-         [src]="video.snippet.thumbnails.maxres?.url"
-         alt="{{ video.snippet.title }}"
+         [src]="video()?.snippet?.thumbnails?.maxres?.url"
+         alt="{{ video()?.snippet?.title }}"
          class="video-image">
   </div>
   <mat-card-content class="video-content">
-    <mat-card-title>{{ video.snippet.title }}</mat-card-title>
-    <p>{{ video.snippet.publishedAt | date }}</p>
-    <p>{{ video.snippet.description }}</p>
-    <div>
-      <button mat-icon-button
-              aria-label="Views">
-        <mat-icon>visibility</mat-icon>
-        <span class="counts">{{ video.statistics.viewCount }}</span>
-      </button>
-      <button mat-icon-button
-              aria-label="Likes">
-        <mat-icon>thumb_up</mat-icon>
-        <span class="counts">{{ video.statistics.likeCount }}</span>
-      </button>
-      <button mat-icon-button
-              aria-label="Dislikes">
-        <mat-icon>favorite</mat-icon>
-        <span class="counts">{{ video.statistics.favoriteCount }}</span>
-      </button>
-      <button mat-icon-button
-              aria-label="Comments">
-        <mat-icon>comment</mat-icon>
-        <span class="counts">{{ video.statistics.commentCount }}</span>
-      </button>
-    </div>
+    <mat-card-title>{{ video()?.snippet?.title }}</mat-card-title>
+    <p>{{ video()?.snippet?.publishedAt | date }}</p>
+    <p>{{ video()?.snippet?.description }}</p>
   </mat-card-content>
+  <mat-card-actions>
+    @for (stat of videoStats; track stat.label) {
+    <button mat-icon-button
+            [attr.aria-label]="stat.label">
+      <mat-icon>{{ stat.icon }}</mat-icon>
+      <span class="counts">{{ video()?.statistics?.[stat.property] }}</span>
+    </button>
+    }
+  </mat-card-actions>
 </mat-card>
 <app-custom-button mat-button
                    color="primary"
-                   (click)="goBack()">Back</app-custom-button>
+                   (click)="goBack()">Back
+</app-custom-button>
 }

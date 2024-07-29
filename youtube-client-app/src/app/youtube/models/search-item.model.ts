@@ -1,37 +1,43 @@
-import { SearchItemData, Snippet, Statistics } from '../../types/interfaces';
-
-export class SearchItemModel implements SearchItemData {
-  private _id: string;
-  private _etag: string;
-  private _kind: string;
-  private _snippet: Snippet;
-  private _statistics: Statistics;
-
-  constructor(id: string, etag: string, kind: string, snippet: Snippet, statistics: Statistics) {
-    this._id = id;
-    this._etag = etag;
-    this._kind = kind;
-    this._snippet = snippet;
-    this._statistics = statistics;
-  }
-
-  public get id(): string {
-    return this._id;
-  }
-
-  public get etag(): string {
-    return this._etag;
-  }
-
-  public get kind(): string {
-    return this._kind;
-  }
-
-  public get snippet(): Snippet {
-    return this._snippet;
-  }
-
-  public get statistics(): Statistics {
-    return this._statistics;
-  }
+export enum ItemStats {
+  VIEW_COUNT = 'viewCount',
+  LIKE_COUNT = 'likeCount',
+  FAVORITE_COUNT = 'favoriteCount',
+  COMMENT_COUNT = 'commentCount',
 }
+
+export enum ItemIcon {
+  VISIBILITY = 'visibility',
+  THUMB_UP = 'thumb_up',
+  THUMB_DOWN = 'favorite',
+  COMMENT = 'comment',
+}
+
+export enum ItemLabel {
+  VIEWS = 'Views',
+  LIKES = 'Likes',
+  FAVORITES = 'Favorite',
+  COMMENTS = 'Comments',
+}
+
+export const itemsStats = [
+  {
+    icon: ItemIcon.VISIBILITY,
+    property: ItemStats.VIEW_COUNT,
+    label: ItemLabel.VIEWS,
+  },
+  {
+    icon: ItemIcon.THUMB_UP,
+    property: ItemStats.LIKE_COUNT,
+    label: ItemLabel.LIKES,
+  },
+  {
+    icon: ItemIcon.THUMB_DOWN,
+    property: ItemStats.FAVORITE_COUNT,
+    label: ItemLabel.FAVORITES,
+  },
+  {
+    icon: ItemIcon.COMMENT,
+    property: ItemStats.COMMENT_COUNT,
+    label: ItemLabel.COMMENTS,
+  },
+] as const;
