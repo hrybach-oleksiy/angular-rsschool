@@ -3,6 +3,10 @@
   justify-content: space-between;
 }
 
+.admin-container {
+  padding: 2rem 0;
+}
+
 mat-card-content {
   display: flex;
   justify-content: center;
@@ -26,4 +30,8 @@ mat-card-title {
 
 .remove-btn {
   margin-left: 1rem;
+}
+
+.tag-button {
+  margin-top: 2rem;
 }
