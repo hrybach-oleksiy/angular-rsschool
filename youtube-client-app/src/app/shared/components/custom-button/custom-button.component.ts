@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -9,4 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './custom-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomButtonComponent {}
+export class CustomButtonComponent {
+  @Input() disabled: boolean = false;
+}
