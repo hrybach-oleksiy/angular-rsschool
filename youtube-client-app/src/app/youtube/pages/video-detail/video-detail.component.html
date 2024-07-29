@@ -1,28 +1,32 @@
 @if (video()) {
-<mat-card class="video-card">
-  <div class="video-image-wrapper">
-    <img mat-card-image
-         [src]="video()?.snippet?.thumbnails?.maxres?.url"
-         alt="{{ video()?.snippet?.title }}"
-         class="video-image">
-  </div>
-  <mat-card-content class="video-content">
-    <mat-card-title>{{ video()?.snippet?.title }}</mat-card-title>
-    <p>{{ video()?.snippet?.publishedAt | date }}</p>
-    <p>{{ video()?.snippet?.description }}</p>
-  </mat-card-content>
-  <mat-card-actions>
-    @for (stat of videoStats; track stat.label) {
-    <button mat-icon-button
-            [attr.aria-label]="stat.label">
-      <mat-icon>{{ stat.icon }}</mat-icon>
-      <span class="counts">{{ video()?.statistics?.[stat.property] }}</span>
-    </button>
-    }
-  </mat-card-actions>
-</mat-card>
-<app-custom-button mat-button
-                   color="primary"
-                   (click)="goBack()">Back
-</app-custom-button>
+<div class="wrapper">
+  <mat-card class="video-card">
+    <div class="video-image-wrapper">
+      <img mat-card-image
+           [src]="video()?.snippet?.thumbnails?.maxres?.url"
+           alt="{{ video()?.snippet?.title }}"
+           class="video-image">
+    </div>
+    <mat-card-content class="video-content">
+      <mat-card-title>{{ video()?.snippet?.title }}</mat-card-title>
+      <p class="video-date">{{ video()?.snippet?.publishedAt | date }}</p>
+      <p class="video-description">{{ video()?.snippet?.description }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      @for (stat of videoStats; track stat.label) {
+      <button mat-icon-button
+              [attr.aria-label]="stat.label">
+        <mat-icon>{{ stat.icon }}</mat-icon>
+        <span class="counts">{{ video()?.statistics?.[stat.property] }}</span>
+      </button>
+      }
+    </mat-card-actions>
+  </mat-card>
+  <app-custom-button mat-button
+                     color="primary"
+                     class="go-back-btn"
+                     (click)="goBack()">Back
+  </app-custom-button>
+</div>
+
 }

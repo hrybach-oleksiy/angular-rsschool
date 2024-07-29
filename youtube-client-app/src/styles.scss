@@ -3,10 +3,6 @@
   --input-bg-color: #efefef;
 }
 
-html,
-body {
-  min-height: 100vh;
-}
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -27,7 +23,4 @@ ul {
 
 .main {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

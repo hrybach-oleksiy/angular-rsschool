@@ -25,7 +25,7 @@ export class SearchService {
   filterTerm$ = this.filterTerm.asObservable();
 
   public searchVideos(query: string): void {
-    const params = new HttpParams().set('type', 'video').set('part', 'snippet').set('maxResults', '6').set('q', query);
+    const params = new HttpParams().set('type', 'video').set('part', 'snippet').set('maxResults', '8').set('q', query);
 
     this.http
       .get<{ items: SearchItemData[] }>('search', { params })
@@ -59,6 +59,8 @@ export class SearchService {
   }
 
   public getItemById(id: string): Observable<SearchItemData | undefined> {
-    return this.items$.pipe(map((items) => items.find((item) => item.id.videoId === id)));
+    return this.items$.pipe(
+      map((items) => items.find((item) => (typeof item.id === 'string' ? item.id === id : item.id.videoId === id))),
+    );
   }
 }
