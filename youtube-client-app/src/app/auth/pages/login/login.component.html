@@ -35,7 +35,7 @@
         <div class="button">
           <app-custom-button type="submit"
                              color="primary"
-                             [disabled]="loginForm.invalid"
+                             [disabled]="!loginForm.valid"
                              mat-button>Login</app-custom-button>
         </div>
       </form>

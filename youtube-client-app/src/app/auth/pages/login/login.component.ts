@@ -4,13 +4,22 @@ import { FormsModule, FormBuilder, Validators, ReactiveFormsModule, AbstractCont
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { LoginService } from '../../services/login.service';
 import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, CustomButtonComponent, ReactiveFormsModule, FormsModule],
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CustomButtonComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    MatButtonModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -85,7 +94,7 @@ export class LoginComponent {
     return null;
   }
 
-  public login(): void {
+  public onLogin() {
     this.loginService.login();
     this.router.navigate(['/main']);
   }
