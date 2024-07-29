@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SearchItemData } from '../../../../types/interfaces';
 import { CustomButtonComponent } from '../../../../shared/components/custom-button/custom-button.component';
 import { BorderColorDirective } from '../../../directives/border-color.directive';
-import { itemsStats } from './search-item.model';
+import { itemsStats } from '../../../models/search-item.model';
 
 @Component({
   selector: 'app-search-item',
@@ -18,5 +18,5 @@ import { itemsStats } from './search-item.model';
 })
 export class SearchItemComponent {
   public item = input.required<SearchItemData>();
-  itemsStats = itemsStats;
+  public itemsStats = itemsStats;
 }

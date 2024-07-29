@@ -58,3 +58,8 @@ export interface SearchItemData {
   snippet: Snippet;
   statistics: Statistics;
 }
+
+export interface Login {
+  username: string;
+  password: string;
+}

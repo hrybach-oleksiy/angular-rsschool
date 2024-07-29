@@ -12,7 +12,7 @@ export class LoginService {
     return of(true);
   }
 
-  public logout() {
+  public logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
   }
 

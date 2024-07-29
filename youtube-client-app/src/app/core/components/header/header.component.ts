@@ -40,22 +40,22 @@ export class HeaderComponent {
 
   isLoggedIn = computed(() => this.loginService.isLoggedIn());
 
-  toggleSortBlock() {
+  public toggleSortBlock(): void {
     this.showSortBlock.set(!this.showSortBlock());
   }
 
-  onSortChange() {
+  public onSortChange(): void {
     this.searchService.setSortConfig({
       criteria: this.sortCriteria(),
       direction: this.sortDirection(),
     });
   }
 
-  onFilterChange() {
+  public onFilterChange(): void {
     this.searchService.setFilterTerm(this.filterTerm());
   }
 
-  handleButtonClick(): void {
+  public handleButtonClick(): void {
     if (this.isLoggedIn()) {
       this.logout();
     } else {
@@ -63,7 +63,7 @@ export class HeaderComponent {
     }
   }
 
-  logout() {
+  public logout(): void {
     this.loginService.logout();
     this.router.navigate(['/login']);
   }
