@@ -3,10 +3,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { loadVideos } from 'src/app/store/actions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/state';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
-import { SearchService } from '../../../youtube/services/search.service';
 
 @Component({
   selector: 'app-search-input',
@@ -18,7 +19,7 @@ import { SearchService } from '../../../youtube/services/search.service';
 })
 export class SearchInputComponent implements OnInit {
   public searchForm!: FormGroup;
-  private readonly searchService = inject(SearchService);
+  private readonly store = inject(Store<AppState>);
   private readonly formBuilder = inject(FormBuilder);
 
   ngOnInit() {
@@ -32,12 +33,11 @@ export class SearchInputComponent implements OnInit {
         debounceTime(500),
         distinctUntilChanged(),
         filter((query) => query.length >= 3),
-        switchMap((query) => {
-          this.searchService.searchVideos(query);
-          return of(null);
-        }),
       )
-      .subscribe();
+      .subscribe((query) => {
+        console.log('Dispatching loadVideos with query:', query);
+        this.store.dispatch(loadVideos({ query }));
+      });
   }
 
   get searchQueryControl(): FormControl {

@@ -71,3 +71,11 @@ export interface Login {
   username: string;
   password: string;
 }
+
+export interface CustomCard {
+  title: string;
+  description: string;
+  imageLink: string;
+  videoLink: string;
+  creationDate: Date;
+}

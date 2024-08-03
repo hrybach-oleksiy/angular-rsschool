@@ -24,20 +24,29 @@ export class SearchService {
   private filterTerm = new BehaviorSubject<string>('');
   filterTerm$ = this.filterTerm.asObservable();
 
-  public searchVideos(query: string): void {
+  public searchVideos(query: string): Observable<SearchItemData[]> {
     const params = new HttpParams().set('type', 'video').set('part', 'snippet').set('maxResults', '8').set('q', query);
 
-    this.http
-      .get<{ items: SearchItemData[] }>('search', { params })
-      .pipe(
-        map((response) => response.items),
-        switchMap((items) => {
-          const videoIds = items.map((item) => item.id.videoId).join(',');
+    // this.http
+    //   .get<{ items: SearchItemData[] }>('search', { params })
+    //   .pipe(
+    //     map((response) => response.items),
+    //     switchMap((items) => {
+    //       const videoIds = items.map((item) => item.id.videoId).join(',');
 
-          return this.getVideoStatistics(videoIds);
-        }),
-      )
-      .subscribe((items) => this.itemsSubject.next(items));
+    //       return this.getVideoStatistics(videoIds);
+    //     }),
+    //   )
+    //   .subscribe((items) => this.itemsSubject.next(items));
+
+    return this.http.get<{ items: SearchItemData[] }>('search', { params }).pipe(
+      map((response) => response.items),
+      switchMap((items) => {
+        const videoIds = items.map((item) => item.id.videoId).join(',');
+
+        return this.getVideoStatistics(videoIds);
+      }),
+    );
   }
 
   private getVideoStatistics(videoIds: string): Observable<SearchItemData[]> {

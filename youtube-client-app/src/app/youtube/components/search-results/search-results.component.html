@@ -1,0 +1,23 @@
+<ul class="items-list">
+  @if (movies$ | async; as videos) {
+  @if (videos.length > 0) {
+  @for (video of videos; track $index) {
+  <li class="item">
+    <!-- <app-search-item [item]="video" /> -->
+    @if (isSearchItemData(video)) {
+    <app-search-item [item]="video" />
+    }
+    @else {
+    <app-custom-card [card]="video" />
+    }
+
+  </li>
+  }
+  }
+  @else {
+  <div class="not-found">
+    No results found
+  </div>
+  }
+  }
+</ul>
